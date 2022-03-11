@@ -9,10 +9,23 @@ using UnityEngine;
 public class ResourcePile : Building
 {
     public ResourceItem Item;
-
-    public float ProductionSpeed = 0.5f;
-
     private float m_CurrentProduction = 0.0f;
+    private float m_ProductionSpeed = 0.5f;
+    public float ProductionSpeed
+    {
+        get { return m_ProductionSpeed; }
+        set
+        {
+            if (value < 0)
+            {
+                Debug.Log("Error");
+            }
+            else
+            {
+                m_ProductionSpeed = value;
+            }
+        }
+    }
 
     private void Update()
     {
@@ -23,7 +36,7 @@ public class ResourcePile : Building
 
             m_CurrentProduction = m_CurrentProduction - amountToAdd + leftOver;
         }
-        
+
         if (m_CurrentProduction < 1.0f)
         {
             m_CurrentProduction += ProductionSpeed * Time.deltaTime;
@@ -33,8 +46,5 @@ public class ResourcePile : Building
     public override string GetData()
     {
         return $"Producing at the speed of {ProductionSpeed}/s";
-        
     }
-    
-    
 }
